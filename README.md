@@ -1,97 +1,68 @@
 # GunSpec API Examples
 
-Working code examples for the [GunSpec firearms API](https://gunspec.io) in TypeScript, Python and cURL. Look up firearm specifications, resolve loose names to records, compare firearms, check attachment compatibility, and connect an AI agent over MCP.
+Runnable examples for the [GunSpec firearms API](https://gunspec.io) in TypeScript and Python: search and fetch firearm specifications, compare firearms, build a product page or a dashboard, export to a spreadsheet, balance a game's weapons, and receive webhooks.
 
-Every example runs against the live API at `https://api.gunspec.io`. The full reference and guides live at [docs.gunspec.io](https://docs.gunspec.io).
+These are the examples kept with the official SDKs' source, copied here on every stable release and pinned to the SDK version released with them.
 
-## What you can build
+## Get a key
 
-- **Product pages** that pull specs, calibers and images for any firearm
-- **Search and autocomplete** that turn "G19 gen 5" into a single firearm record
-- **Comparison tools** that put two or more firearms side by side
-- **Fitment checks** that answer which attachments fit a given firearm
-- **Dashboards and reports** built from catalogue statistics
-- **Game balancing** from firearm stats and game profiles
-- **AI agents** that answer firearm questions through the GunSpec MCP server
-
-## Quick start
-
-Get a free API key at [gunspec.io](https://gunspec.io), then set it in your environment:
+Create an API key at [app.gunspec.io/keys](https://app.gunspec.io/keys), then put it in your environment. Both SDKs read it from there.
 
 ```bash
 export GUNSPEC_API_KEY=your_key_here
 ```
 
-### TypeScript
+## TypeScript
+
+Uses [`@buun_group/gunspec-sdk`](https://www.npmjs.com/package/@buun_group/gunspec-sdk) 0.13.0. Node 18 or newer.
 
 ```bash
-npm install @buun_group/gunspec-sdk
+cd typescript
+npm install
+npm run basic-usage
 ```
 
-```typescript
-import { GunSpec } from '@buun_group/gunspec-sdk'
+| Example | What it shows | Plan it needs | Run |
+| --- | --- | --- | --- |
+| [`basic-usage.ts`](typescript/basic-usage.ts) | Search, fetch and compare firearms, and handle the errors the API returns. | Builder | `npm run basic-usage` |
+| [`dashboard.ts`](typescript/dashboard.ts) | Build a firearms industry dashboard. | Enterprise | `npm run dashboard` |
+| [`excel-report.ts`](typescript/excel-report.ts) | Generate a comprehensive firearms report for Excel/CSV export. | Explorer | `npm run excel-report` |
+| [`game-dev.ts`](typescript/game-dev.ts) | Game developer weapon system integration. | Studio | `npm run game-dev` |
+| [`product-page.ts`](typescript/product-page.ts) | Populate a product page for a specific firearm. | Builder | `npm run product-page` |
 
-const client = new GunSpec()
+## Python
 
-const { data: hit } = await client.firearms.resolve('G19 gen 5')
-if (hit.status === 'resolved') console.log(hit.firearmId)
-```
-
-### Python
+Uses [`gunspec`](https://pypi.org/project/gunspec/) 0.7.0. Python 3.9 or newer.
 
 ```bash
-pip install gunspec
+cd python
+pip install -r requirements.txt
+python basic_usage.py
 ```
 
-```python
-from gunspec import GunSpec
+| Example | What it shows | Plan it needs | Run |
+| --- | --- | --- | --- |
+| [`basic_usage.py`](python/basic_usage.py) | Basic usage of the gunspec SDK. | Builder | `python basic_usage.py` |
+| [`webhooks.py`](python/webhooks.py) | Receive and verify GunSpec webhook deliveries. | None, it makes no API call | `python webhooks.py` |
 
-client = GunSpec()
+The webhooks example only receives deliveries. Registering the endpoint it listens on (`client.webhooks.create`) needs: Any plan, with a key on your account.
 
-result = client.firearms.list({"category": "pistol", "per_page": 5})
-for firearm in result.data:
-    print(firearm["id"], firearm["name"])
-```
+## Which plan an example needs
 
-### cURL
+Each "Plan it needs" is the highest plan any call in that example requires, read from the API's [OpenAPI spec](https://api.gunspec.io/openapi.json) rather than written by hand. On a lower plan, a call above yours is refused with a 403 whose `error.reason` says why. Listing firearms needs: Explorer. Compare plans on the [pricing page](https://gunspec.io/en/pricing).
+
+## Straight from the terminal
 
 ```bash
 curl "https://api.gunspec.io/v1/firearms?category=pistol" \
   -H "X-API-Key: $GUNSPEC_API_KEY"
 ```
 
-## Examples
-
-| Example | What it shows | Languages |
-| --- | --- | --- |
-| basic-usage | List, search and fetch firearms | TypeScript, Python |
-| product-page | Build a firearm product page from one record | TypeScript |
-| dashboard | Catalogue statistics for a dashboard | TypeScript |
-| excel-report | Export firearm specs to a spreadsheet | TypeScript |
-| game-dev | Game stats, balancing and tier lists | TypeScript |
-| webhooks | Receive and verify catalogue change events | Python |
-| mcp-agent | Connect Claude or another agent to the MCP server | Config |
-
-Some endpoints need a paid plan. Each example names the plan it needs at the top of its README. See [pricing](https://gunspec.io/en/pricing).
-
-## Use GunSpec from an AI agent
-
-GunSpec runs a hosted MCP server, so Claude, Cursor and other MCP clients can query the catalogue directly.
-
-```
-https://mcp.gunspec.io/mcp-oauth
-```
-
-Setup for each client is in the [MCP guide](https://docs.gunspec.io/en/mcp).
-
 ## Links
 
-- Website: [gunspec.io](https://gunspec.io)
-- Documentation: [docs.gunspec.io](https://docs.gunspec.io)
-- OpenAPI spec: [api.gunspec.io/openapi.json](https://api.gunspec.io/openapi.json)
-- TypeScript SDK: [@buun_group/gunspec-sdk on npm](https://www.npmjs.com/package/@buun_group/gunspec-sdk)
-- Python SDK: [gunspec on PyPI](https://pypi.org/project/gunspec/)
+- Documentation and API reference: [docs.gunspec.io](https://docs.gunspec.io)
+- TypeScript SDK source: [gunspec-js](https://github.com/gunspec/gunspec-js)
+- Python SDK source: [gunspec-python](https://github.com/gunspec/gunspec-python)
+- MCP server for AI agents: [gunspec-mcp](https://github.com/gunspec/gunspec-mcp)
 
-## Terms
-
-Use of the API is covered by the [GunSpec terms](https://gunspec.io/en/terms).
+Use of the API is covered by the [GunSpec terms](https://gunspec.io/terms).

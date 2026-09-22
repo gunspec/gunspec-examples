@@ -1,0 +1,21 @@
+{
+  "name": "gunspec-examples-typescript",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "basic-usage": "tsx basic-usage.ts",
+    "dashboard": "tsx dashboard.ts",
+    "excel-report": "tsx excel-report.ts",
+    "game-dev": "tsx game-dev.ts",
+    "product-page": "tsx product-page.ts",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@buun_group/gunspec-sdk": "^0.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.2.3",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}
