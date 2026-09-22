@@ -11,7 +11,7 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@buun_group/gunspec-sdk": "^0.13.0"
+    "@buun_group/gunspec-sdk": "^0.13.1"
   },
   "devDependencies": {
     "@types/node": "^25.2.3",
