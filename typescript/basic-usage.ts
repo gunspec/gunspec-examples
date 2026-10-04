@@ -46,7 +46,7 @@ async function main() {
   console.log('5 lightest firearms:', lightest.map((f) => f.name))
 
   // Head-to-head comparison
-  const { data: h2h } = await client.firearms.headToHead({ a: 'ak-47', b: 'm16a4' })
+  const { data: h2h } = await client.firearms.headToHead({ a: 'ak-47', b: 'colt-m16a4' })
   const verdictSummary = Object.entries(h2h.verdicts)
     .map(([field, v]) => `${field}: ${v.winner}`)
     .join(', ')
@@ -96,7 +96,7 @@ async function main() {
     console.log(`  ${tier}-tier (${items.length}): ${names}${more}`)
   }
 
-  const { data: matchup } = await client.game.matchups({ a: 'ak-47', b: 'm16a4' })
+  const { data: matchup } = await client.game.matchups({ a: 'ak-47', b: 'colt-m16a4' })
   console.log(`Matchup: ${matchup.a.name} (${matchup.aWins} wins) vs ${matchup.b.name} (${matchup.bWins} wins), ${matchup.draws} draws`)
 
   const { data: roster } = await client.game.roleRoster({ role: 'sniper', count: 3 })
@@ -115,7 +115,13 @@ async function main() {
     if (error instanceof NotFoundError) {
       console.log(`Not found (request ID: ${error.requestId})`)
     } else if (error instanceof RateLimitError) {
-      console.log(`Rate limited - retry after ${error.retryAfter}s`)
+      if (error.isDailyCap) {
+        console.log(`Daily allowance spent; it resets at ${error.dailyReset?.toISOString() ?? 'midnight UTC'}`)
+      } else if (error.isMonthlyCap) {
+        console.log(`Monthly allowance spent; it resets at ${error.monthlyReset?.toISOString() ?? 'midnight UTC on the 1st'}`)
+      } else {
+        console.log(`Rate limited, retry after ${error.retryAfter}s`)
+      }
     } else {
       throw error
     }
