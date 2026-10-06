@@ -14,7 +14,7 @@ export GUNSPEC_API_KEY=your_key_here
 
 ## TypeScript
 
-Uses [`@buun_group/gunspec-sdk`](https://www.npmjs.com/package/@buun_group/gunspec-sdk) 0.14.1. Node 18 or newer.
+Uses [`@buun_group/gunspec-sdk`](https://www.npmjs.com/package/@buun_group/gunspec-sdk) 0.15.0. Node 18 or newer.
 
 ```bash
 cd typescript
