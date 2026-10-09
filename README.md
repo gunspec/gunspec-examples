@@ -14,7 +14,7 @@ export GUNSPEC_API_KEY=your_key_here
 
 ## TypeScript
 
-Uses [`@buun_group/gunspec-sdk`](https://www.npmjs.com/package/@buun_group/gunspec-sdk) 0.15.0. Node 18 or newer.
+Uses [`@buun_group/gunspec-sdk`](https://www.npmjs.com/package/@buun_group/gunspec-sdk) 0.16.0. Node 18 or newer.
 
 ```bash
 cd typescript
@@ -32,7 +32,7 @@ npm run basic-usage
 
 ## Python
 
-Uses [`gunspec`](https://pypi.org/project/gunspec/) 0.8.1. Python 3.9 or newer.
+Uses [`gunspec`](https://pypi.org/project/gunspec/) 0.9.0. Python 3.9 or newer.
 
 ```bash
 cd python

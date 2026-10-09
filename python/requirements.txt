@@ -1,1 +1,1 @@
-gunspec>=0.8.1
+gunspec>=0.9.0
